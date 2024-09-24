@@ -25,12 +25,16 @@ jobs:
 
       - name: Wait for MSSQL container to be ready
         run: |
-          timeout 300 bash -c 'until docker compose ps | grep -q "mssql.*\(healthy\)"; do sleep 5; done'
+          timeout 300 bash -c 'until docker compose ps | grep -q "mssql.*\(healthy\)"; do sleep 5; docker compose ps; docker compose logs mssql; done'
 
       - name: Debug MSSQL
         run: |
           echo "MSSQL Logs:"
           docker compose logs mssql
+          
+          echo "Container details:"
+          docker compose ps
+          docker inspect sqldef-mssql-1
           
           echo "Checking sqlcmd path:"
           docker compose exec mssql which sqlcmd
@@ -40,6 +44,13 @@ jobs:
           echo "Trying to execute sqlcmd:"
           docker compose exec mssql /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Passw0rd' -Q "SELECT @@VERSION" || echo "Failed to execute sqlcmd from /opt/mssql-tools/bin"
           docker compose exec mssql /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Passw0rd' -Q "SELECT @@VERSION" || echo "Failed to execute sqlcmd from /opt/mssql-tools18/bin"
+          
+          echo "Checking system resources:"
+          docker compose exec mssql free -m
+          docker compose exec mssql df -h
+          
+          echo "Checking MSSQL error log:"
+          docker compose exec mssql cat /var/opt/mssql/log/errorlog
 
       - name: Run mssqldef tests
         run: |
