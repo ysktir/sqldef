@@ -32,6 +32,7 @@ services:
       start_period: 5s
   mssql:
     image: mcr.microsoft.com/mssql/server:2019-CU28-ubuntu-20.04
+    user: root
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: Passw0rd
