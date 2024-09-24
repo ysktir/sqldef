@@ -35,8 +35,10 @@ services:
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: Passw0rd
+      SSQL_PID: Developer
     volumes:
-      - ./.docker/mssql/data:/var/opt/mssql/data
+      # - ./.docker/mssql/data:/var/opt/mssql/data
+      - ./.docker/mssql:/var/opt/mssql
     ports:
       - '1433:1433'
     healthcheck:
