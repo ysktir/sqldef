@@ -39,14 +39,14 @@ services:
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: Passw0rd
-      SSQL_PID: Developer
+      # SSQL_PID: Developer
     volumes:
       - ./.docker/mssql/data:/var/opt/mssql/data
       # - ./.docker/mssql:/var/opt/mssql
     ports:
       - '1433:1433'
     healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Passw0rd' -Q 'SELECT 1' || exit 1"]
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Passw0rd", "-Q", "SELECT 1"]
       interval: 5s
       timeout: 5s
       retries: 5
