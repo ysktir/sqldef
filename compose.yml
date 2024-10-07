@@ -32,8 +32,8 @@ services:
       start_period: 5s
   mssql:
     # todo: 動いた
-    # image: mcr.microsoft.com/mssql/server:2019-CU28-ubuntu-20.04
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/mssql/server:2019-CU28-ubuntu-20.04
+    # image: mcr.microsoft.com/mssql/server:2022-latest
     # image: mcr.microsoft.com/mssql/server:2017-CU28-ubuntu-16.04
     user: root
     environment:
@@ -41,8 +41,8 @@ services:
       SA_PASSWORD: Passw0rd
       SSQL_PID: Developer
     volumes:
-      # - ./.docker/mssql/data:/var/opt/mssql/data
-      - ./.docker/mssql:/var/opt/mssql
+      - ./.docker/mssql/data:/var/opt/mssql/data
+      # - ./.docker/mssql:/var/opt/mssql
     ports:
       - '1433:1433'
     healthcheck:
